@@ -17,11 +17,11 @@ Source of truth: the assignment PDF (keep it outside the repo / out of the deliv
 | R11 | Consistent design language, typography, restrained colour (§3.2) | tokens.css | review | ☐ |
 | R12 | ≥2 scenes with distinctive visual treatment (§3.2) | 03 isometric campus, 06 particle field | review | ☐ |
 | R13 | Effects explain something; no ornamental time-wasting (§3.2) | all | review | ☐ |
-| R14 | Simulator: ≥2 inputs change visible numbers/space; ≥1 KPI or chart updates via real client-side logic (§3.3) | 07 | unit + e2e | ☐ |
+| R14 | Simulator: ≥2 inputs change visible numbers/space; ≥1 KPI or chart updates via real client-side logic (§3.3) | 07 | unit + e2e | ◐ model done (slice 2); UI in slice 3 |
 | R15 | Exploratory interaction: select hotspot/component/layer/milestone for detail (§3.3) | 03 zones, 04 nodes, 09 phases | e2e | ☐ |
 | R16 | Controlled comparison: before/after, day/night, normal/incident… with visible outcome (§3.3) | 05 with/without, 06 day/night, 07 normal/heatwave | e2e | ☐ |
 | R17 | Presenter navigation: next/prev, keyboard, visible progress/location, return to opening, resume a scene (§3.3) | nav.js, hash | e2e | ◐ slice 1 |
-| R18 | Simulator calculation, assumptions and visual state explainable (§3.3) | simulator-model.md, assumptions drawer | walkthrough | ☐ |
+| R18 | Simulator calculation, assumptions and visual state explainable (§3.3) | simulator-model.md, assumptions drawer | walkthrough | ◐ model done (slice 2); UI in slice 3 |
 | R19 | Works by double-clicking `index.html` under `file://`, no server/login/install/internet (§4.1) | build | e2e offline + manual Wi-Fi-off | ◐ slice 1 |
 | R20 | All dependencies bundled; no CDN/API/fetch at runtime (§4.1) | build | grep test on dist | ◐ slice 1 |
 | R21 | Libraries licence-compliant (§4.1) | `docs/licenses.md` | review | ☐ |

@@ -12,6 +12,7 @@ import { createCore } from './core/core-orb.js';
 import { createController } from './core/controller.js';
 import { transitions } from './core/transitions.js';
 import { createNav, parseHash } from './core/nav.js';
+import { DEFAULT_SIM } from './model/constants.js';
 
 import proposition from './scenes/01-proposition/index.js';
 import pressure from './scenes/02-pressure/index.js';
@@ -37,7 +38,13 @@ async function boot() {
   const stageEl = document.getElementById('stage');
   const scenesEl = document.getElementById('scenes');
 
-  const store = createStore({ sceneIndex: 0, paused: false, reducedMotion: matchMedia('(prefers-reduced-motion: reduce)').matches });
+  // `sim` holds only the simulator INPUTS; results are derived with createSimSelector(store), never stored.
+  const store = createStore({
+    sceneIndex: 0,
+    paused: false,
+    reducedMotion: matchMedia('(prefers-reduced-motion: reduce)').matches,
+    sim: { ...DEFAULT_SIM },
+  });
   const motion = createMotion(store);
   fitStage(stageEl);
   const core = createCore(stageEl, motion);
