@@ -91,14 +91,16 @@ Each `scenes/NN-name/index.js` exports:
 ```js
 export default {
   id: 'pressure', title: 'The pressure', coreAnchor: '[data-core-anchor]',
-  mount(root, ctx) {},      // once: build DOM, cache nodes, create (paused) timelines. ctx = { store, motion, core }
-  enter(direction) {},      // returns a GSAP timeline (or Promise): plays the entrance choreography
+  mount(root, ctx) {},      // once: build DOM, cache nodes, create (paused) timelines. ctx = { store, motion, core, selectSim }
+  enter(direction) {},      // returns a GSAP timeline: a QUICK reveal of the scene frame (must fit the standard transition budget, src/core/timing.js)
   exit(direction) {},       // returns a timeline for leaving (may be very short)
-  activate() {},            // after enter: start loops (particles, flows), add listeners via ctx.motion.listen()
+  activate() {},            // after enter: play the meaningful choreography (chart draws, count-ups, ~2 s), start loops, add listeners via ctx.motion.scope()
   deactivate() {},          // after exit: stop loops, abort listeners; keep state
   reset() {},               // used by "Replay the story": timelines back to start, interaction UI to defaults (NOT simulator state)
 };
 ```
+
+**Entrance rule (timing):** the controller awaits `enter()`, so it must stay within the standard transition budget (`timing.js`, <= 0.7 s). Anything longer (chart drawing, count-ups, staggered cards) is a timeline built in `activate()` and killed in `deactivate()`; it never blocks navigation. When paused or in reduced motion, `activate()` jumps that timeline to its end state (a paused global clock would otherwise leave the scene half-drawn).
 
 Separation of **state** from **DOM effects**: interactive state lives in the store (or in a small per-scene state object); render functions read state and update the DOM. Event handlers only change state. This is what you explain when asked about "lifecycle of interactive state".
 

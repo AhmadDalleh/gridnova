@@ -2,7 +2,7 @@
 #stage {
   position: absolute; left: 50%; top: 50%; width: 1920px; height: 1080px;
   transform-origin: center; overflow: hidden;
-  background: radial-gradient(1200px 700px at 70% 40%, #0f2036 0%, var(--bg) 70%);
+  background: radial-gradient(1200px 700px at 70% 40%, var(--bg-raised) 0%, var(--bg) 70%);
 }
 #scenes { position: absolute; inset: 0; }
 .scene { position: absolute; inset: 0; visibility: hidden; opacity: 0; }
@@ -15,7 +15,7 @@
 
 /* The Core: top-left origin so x/y/width/height tweens move it in stage pixels. */
 #core { position: absolute; left: 0; top: 0; width: 200px; height: 200px; z-index: 10; pointer-events: none; transform-origin: 0 0; --glow: 0.7; }
-.core-glow { position: absolute; inset: -30%; border-radius: 50%; background: radial-gradient(circle, rgba(34, 211, 238, calc(var(--glow) * 0.55)) 0%, transparent 65%); }
-.core-body { position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #a5f3fc 0%, var(--cyan) 35%, #0e7490 100%); }
+.core-glow { position: absolute; inset: -30%; border-radius: 50%; background: radial-gradient(circle, rgba(70, 215, 193, calc(var(--glow) * 0.55)) 0%, transparent 65%); }
+.core-body { position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #c4f7ee 0%, var(--cyan) 35%, #17766a 100%); }
 .core-orbit { position: absolute; inset: -12%; }
 .core-dot { position: absolute; left: 50%; top: 0; width: 12%; height: 12%; margin-left: -6%; border-radius: 50%; background: var(--amber); box-shadow: 0 0 18px var(--amber); }

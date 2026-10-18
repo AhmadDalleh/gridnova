@@ -53,4 +53,10 @@ export const ECON = {
   cashflowYears: 10,
 };
 
+// Shown in the assumptions drawer (docs/simulator-model.md §5).
+export const EXCLUSIONS = [
+  'Battery degradation', 'Round-trip losses in the annual value', 'Export revenue', 'Financing', 'Incentives',
+  'Taxes', 'Inflation', 'Residual value', 'Demand-response revenue', 'Chiller / EV flexibility (scene 05 narrative only)',
+];
+
 export const SEARCH_ITERATIONS = 60;   // binary-search steps; 2^-60 of the range is far below any display precision

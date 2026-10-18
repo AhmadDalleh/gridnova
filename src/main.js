@@ -13,6 +13,8 @@ import { createController } from './core/controller.js';
 import { transitions } from './core/transitions.js';
 import { createNav, parseHash } from './core/nav.js';
 import { DEFAULT_SIM } from './model/constants.js';
+import { createSimSelector } from './core/selectors.js';
+import { loadSim, persistSim } from './core/persist.js';
 
 import proposition from './scenes/01-proposition/index.js';
 import pressure from './scenes/02-pressure/index.js';
@@ -43,8 +45,10 @@ async function boot() {
     sceneIndex: 0,
     paused: false,
     reducedMotion: matchMedia('(prefers-reduced-motion: reduce)').matches,
-    sim: { ...DEFAULT_SIM },
+    sim: loadSim(DEFAULT_SIM),
   });
+  persistSim(store);
+  const selectSim = createSimSelector(store);   // one memoised selector shared by every scene
   const motion = createMotion(store);
   fitStage(stageEl);
   const core = createCore(stageEl, motion);
@@ -55,7 +59,7 @@ async function boot() {
     root.className = 'scene';
     root.dataset.scene = module.id;
     scenesEl.append(root);
-    module.mount(root, { store, motion, core });
+    module.mount(root, { store, motion, core, selectSim });
     return { ...module, el: root };
   });
 

@@ -39,7 +39,7 @@ A glowing cyan **orb with an amber orbiting dot** (the "Core") lives in a fixed 
 | 03 | Moves to the campus map's central substation (it "lands" on the campus) |
 | 04 | Becomes the **GridNova controller node** at the centre of the system diagram |
 | 05–06 | Small, top-right, pulses on each dispatch step |
-| 07 | Sits beside the KPI; its glow intensity = (100 − grid reliance %) |
+| 07 | Sits beside the KPI; its glow intensity = **peak reduction %** (0–60 % mapped to a visible min–max glow) |
 | 08–09 | Returns to large on the closing frame next to the decision ask |
 
 Implementation: one element, moved with GSAP **Flip / FLIP-style** tweens to per-scene anchor elements (`data-core-anchor`). See `architecture.md`.
@@ -106,7 +106,7 @@ Each scene lists: **Purpose · Content · Visual · Motion · Interaction · Exi
   - Chart: **24-hour stacked chart** computed live: load line, solar, battery discharge, battery charge, grid import; plus the ghost "before" curve from scene 02.
   - Assumptions drawer: every constant from `simulator-model.md`, labelled illustrative.
 - **Visual:** dashboard composition; KPI numbers large.
-- **Motion:** chart morphs smoothly between results (tween the data arrays, not redraw jumps); KPI numbers tween to new values; Core glow = renewable share.
+- **Motion:** chart morphs smoothly between results (tween the data arrays, not redraw jumps); KPI numbers tween to new values; Core glow = peak reduction % (headline KPI; 0–60 % mapped to min–max glow).
 - **Interaction:** sliders (keyboard accessible), toggle, presets; state **persists** when navigating away and back.
 - **Exit → 08 (composed transition C):** the four KPI numbers detach and **fly into** their positions in scene 08's business-case chart.
 
