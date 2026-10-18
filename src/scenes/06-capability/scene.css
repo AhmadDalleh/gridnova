@@ -1,0 +1,48 @@
+/* Scene 06, 1920x1080 stage pixels. A full-bleed sky tint and a canvas of particles sit behind the content. */
+.s6-sky { position: absolute; inset: 0; }
+.s6-sky-day, .s6-sky-night { position: absolute; inset: 0; transition: opacity 0.9s; }
+.s6-sky-day { background: radial-gradient(900px 520px at 640px 300px, rgba(243, 185, 87, 0.16), transparent 70%); }
+.s6-sky-night { background: radial-gradient(1100px 700px at 640px 500px, rgba(40, 70, 140, 0.28), transparent 75%); opacity: 0; }
+[data-mode='night'] .s6-sky-day { opacity: 0; }
+[data-mode='night'] .s6-sky-night { opacity: 1; }
+.s6-orb { position: absolute; left: 1090px; top: 250px; width: 70px; height: 70px; border-radius: 50%; background: var(--amber); box-shadow: 0 0 60px rgba(243, 185, 87, 0.7); transition: background 0.9s, box-shadow 0.9s; }
+[data-mode='night'] .s6-orb { background: #cfe0f2; box-shadow: 0 0 40px rgba(160, 190, 230, 0.5); }
+
+.s6-head { position: absolute; left: 120px; top: 50px; width: 1100px; }
+.s6-title { margin: 0; font: 700 60px/1.1 var(--font-display); }
+.s6-statement { margin: 6px 0 0; font: 500 32px var(--font-body); color: var(--cyan); }
+.s6-core-anchor { position: absolute; left: 1736px; top: 56px; width: 64px; height: 64px; pointer-events: none; }
+
+.s6-controls { position: absolute; left: 120px; top: 212px; display: flex; align-items: center; gap: 40px; }
+.s6-toggle { display: flex; }
+.s6-toggle button { padding: 10px 32px; background: transparent; color: var(--text); border: 1px solid var(--line); font: 600 24px var(--font-body); cursor: pointer; }
+.s6-toggle button:first-child { border-radius: 12px 0 0 12px; }
+.s6-toggle button:last-child { border-radius: 0 12px 12px 0; }
+.s6-toggle button[aria-pressed='true'] { background: var(--cyan); color: #04231f; border-color: var(--cyan); }
+.s6-toggle button:focus-visible { outline: 3px solid var(--cyan); outline-offset: 3px; }
+.s6-legend { display: flex; gap: 28px; margin: 0; padding: 0; list-style: none; font: 400 22px var(--font-body); color: var(--text-dim); }
+.s6-legend li { display: flex; align-items: center; gap: 10px; }
+.s6-legend i { width: 14px; height: 14px; border-radius: 50%; display: block; }
+
+/* The labelled shapes the particles flow between. */
+.s6-shape { position: absolute; box-sizing: border-box; border-radius: 10px; display: grid; place-items: center; }
+.s6-shape span { font: 600 22px var(--font-body); color: var(--text); }
+.s6-solar { background: repeating-linear-gradient(90deg, rgba(243, 185, 87, 0.5) 0 56px, rgba(243, 185, 87, 0.18) 56px 60px); border: 2px solid var(--amber); }
+.s6-solar span { transform: translateY(-34px); }
+.s6-battery { background: rgba(70, 215, 193, 0.14); border: 3px solid var(--cyan); }
+.s6-grid { border: 2px solid var(--coral); background: rgba(238, 126, 95, 0.1); }
+.s6-buildings { display: flex; align-items: flex-end; gap: 14px; padding: 0 14px; border-bottom: 3px solid var(--line); }
+.s6-buildings b { flex: 1; background: rgba(147, 170, 169, 0.35); border: 1px solid var(--line); border-bottom: 0; border-radius: 6px 6px 0 0; }
+.s6-buildings b:nth-child(1) { height: 60%; } .s6-buildings b:nth-child(2) { height: 85%; } .s6-buildings b:nth-child(3) { height: 70%; }
+.s6-buildings b:nth-child(4) { height: 100%; } .s6-buildings b:nth-child(5) { height: 75%; } .s6-buildings b:nth-child(6) { height: 55%; }
+.s6-label { position: absolute; margin: 0; font: 600 22px var(--font-body); color: var(--text-dim); }
+
+#s6-canvas { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; pointer-events: none; }
+
+.s6-panels { position: absolute; left: 1290px; top: 190px; width: 510px; margin: 0; padding: 0; list-style: none; display: grid; gap: 14px; }
+.s6-panel { box-sizing: border-box; padding: 16px 24px; background: var(--bg-raised); border: 1px solid var(--line); border-radius: 16px; opacity: 0.55; transition: opacity 0.5s, border-color 0.5s, box-shadow 0.5s; }
+.s6-panel.is-active { opacity: 1; border-color: var(--cyan); box-shadow: inset 0 0 0 2px var(--cyan); }
+.s6-panel h2 { margin: 0; font: 700 36px var(--font-display); }
+.s6-panel-text { margin: 4px 0 0; font: 400 22px/1.3 var(--font-body); color: var(--text-dim); }
+.s6-panel-state { margin: 8px 0 0; font: 600 22px/1.3 var(--font-body); color: var(--amber); }
+.s6-panel.is-active .s6-panel-state { color: var(--cyan); }

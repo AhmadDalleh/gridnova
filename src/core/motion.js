@@ -29,6 +29,9 @@ export function createMotion(store) {
   return {
     prefersReduced: mq.matches,
 
+    /** True while loops are allowed to run (not paused, not reduced, tab visible). Scenes redraw a static frame themselves when false. */
+    running: canAnimate,
+
     /** Register a per-frame function. Returns stop(). It only runs while animation is allowed. */
     loop(fn) {
       const wrapped = (now, dt) => {
