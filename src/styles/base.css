@@ -1,0 +1,10 @@
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--font-body); }
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+
+#preloader {
+  position: fixed; inset: 0; z-index: 50; display: flex; align-items: center; justify-content: center; gap: 16px;
+  background: var(--bg); font: 700 28px var(--font-display); letter-spacing: 0.08em;
+}
+.pre-mark { width: 18px; height: 18px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 24px var(--cyan); }

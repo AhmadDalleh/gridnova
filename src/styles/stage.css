@@ -1,0 +1,21 @@
+/* The stage is always 1920x1080 and scaled as one unit by stage.js, so scenes never use vw/vh. */
+#stage {
+  position: absolute; left: 50%; top: 50%; width: 1920px; height: 1080px;
+  transform-origin: center; overflow: hidden;
+  background: radial-gradient(1200px 700px at 70% 40%, #0f2036 0%, var(--bg) 70%);
+}
+#scenes { position: absolute; inset: 0; }
+.scene { position: absolute; inset: 0; visibility: hidden; opacity: 0; }
+
+/* Placeholder scene (slice 1 only): number + title, and an anchor box where the Core should land. */
+.ph-number { position: absolute; left: 120px; top: 120px; font: 700 320px/1 var(--font-display); color: transparent; -webkit-text-stroke: 2px var(--line); }
+.ph-title { position: absolute; left: 130px; top: 560px; margin: 0; font: 700 104px/1.05 var(--font-display); }
+.ph-tag { position: absolute; left: 134px; top: 710px; font: 500 26px var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim); }
+.ph-anchor { position: absolute; border: 2px dashed var(--line); border-radius: 50%; }
+
+/* The Core: top-left origin so x/y/width/height tweens move it in stage pixels. */
+#core { position: absolute; left: 0; top: 0; width: 200px; height: 200px; z-index: 10; pointer-events: none; transform-origin: 0 0; --glow: 0.7; }
+.core-glow { position: absolute; inset: -30%; border-radius: 50%; background: radial-gradient(circle, rgba(34, 211, 238, calc(var(--glow) * 0.55)) 0%, transparent 65%); }
+.core-body { position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #a5f3fc 0%, var(--cyan) 35%, #0e7490 100%); }
+.core-orbit { position: absolute; inset: -12%; }
+.core-dot { position: absolute; left: 50%; top: 0; width: 12%; height: 12%; margin-left: -6%; border-radius: 50%; background: var(--amber); box-shadow: 0 0 18px var(--amber); }

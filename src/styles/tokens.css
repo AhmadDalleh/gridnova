@@ -1,0 +1,13 @@
+:root {
+  /* Colour meaning is fixed: amber = solar/value, cyan = storage/GridNova, coral = grid/peak/risk. */
+  --bg: #060d18;
+  --bg-raised: #0d1a2b;
+  --text: #e8f1f8;
+  --text-dim: #8aa0b5;
+  --amber: #fbbf24;
+  --cyan: #22d3ee;
+  --coral: #fb7185;
+  --line: rgba(232, 241, 248, 0.14);
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+}

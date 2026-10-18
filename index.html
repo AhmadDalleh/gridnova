@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GridNova</title>
+  </head>
+  <body>
+    <!-- The 1920x1080 stage: every scene is authored in stage pixels and scaled as one unit. -->
+    <div id="stage">
+      <main id="scenes"></main>
+      <!-- The persistent GridNova Core: one element above all scenes (see core-orb.js). -->
+      <div id="core" aria-hidden="true">
+        <div class="core-glow"></div>
+        <div class="core-body"></div>
+        <div class="core-orbit"><span class="core-dot"></span></div>
+      </div>
+    </div>
+
+    <div id="preloader" role="status"><span class="pre-mark"></span><span>GridNova</span></div>
+
+    <div id="chips" aria-live="polite">
+      <span id="chip-paused" hidden>Paused</span>
+      <span id="chip-reduced" hidden>Reduced motion</span>
+    </div>
+
+    <nav id="hud" aria-label="Presentation controls">
+      <button id="btn-prev" type="button" aria-label="Previous scene">&#8249;</button>
+      <span id="counter">01 / 09</span>
+      <ol id="progress" aria-label="Scene progress"></ol>
+      <button id="btn-next" type="button" aria-label="Next scene">&#8250;</button>
+      <span class="hud-sep"></span>
+      <button id="btn-menu" type="button" aria-haspopup="dialog" aria-expanded="false">Menu</button>
+      <button id="btn-pause" type="button" aria-pressed="false">Pause</button>
+      <button id="btn-reduced" type="button" aria-pressed="false">Reduce motion</button>
+      <button id="btn-fullscreen" type="button" aria-pressed="false">Fullscreen</button>
+    </nav>
+
+    <div id="menu" role="dialog" aria-modal="true" aria-label="Scenes" hidden>
+      <div class="menu-panel">
+        <h2>Scenes</h2>
+        <ol id="menu-list"></ol>
+        <p class="menu-hint">Esc closes &middot; M toggles &middot; keys 1-9 jump &middot; P pause &middot; R reduced motion &middot; F fullscreen</p>
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
