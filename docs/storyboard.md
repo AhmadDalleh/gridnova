@@ -64,7 +64,7 @@ Each scene lists: **Purpose · Content · Visual · Motion · Interaction · Exi
 - **Visual:** large SVG chart, coral peak window band 14:00–17:00.
 - **Motion:** **SVG path drawing** of the load curve (left→right, synced with a clock readout 00:00→24:00); peak band pulses once; numbers **count up** when their annotation appears.
 - **Interaction:** hover/focus on the curve shows the hour + MW (tooltip).
-- **Exit:** curve fades to 20 % and stays as the ghost "before" line used again in scene 07.
+- **Exit:** standard. *(Decision, slice 5: the ghost "before" line that was to carry over into scene 07 is dropped. Continuity requirement R08 is covered by the Core, which already carries the story 01→09.)*
 
 ### 03 · The opportunity
 - **Purpose:** target users, benefits, measurable outcomes — spatial, not bullets.
@@ -80,7 +80,7 @@ Each scene lists: **Purpose · Content · Visual · Motion · Interaction · Exi
 - **Visual:** layered SVG diagram: power layer and control layer.
 - **Motion:** links **draw in** one by one; then continuous **flow animation** along links (dash offset) — direction and speed show what flows where; control signals pulse from the controller.
 - **Interaction (exploratory, required):** select a node (click / Enter) → node focuses, unrelated links dim, a detail panel shows Input · Output · Value · "How GridNova decides". Layer toggle: Power / Control / Both.
-- **Exit:** diagram shrinks to a mini-map that stays in the corner of scene 05.
+- **Exit:** standard. *(Built in slice 5: scene 05 rebuilds the same diagram as its own mini-map from the shared node data (`04-system/data.js`) instead of shrinking scene 04's diagram into it.)*
 
 ### 05 · A peak event (use case)
 - **Purpose:** trigger → business outcome sequence.
@@ -103,7 +103,7 @@ Each scene lists: **Purpose · Content · Visual · Motion · Interaction · Exi
 - **Content:** "Size the system for your priorities."
   - Inputs: **Solar capacity** slider 0–10 MW (0.5 step) · **Battery energy** slider 0–24 MWh (1 step) · **Day type** toggle Normal / Heatwave · presets **Baseline / Balanced / Resilience**.
   - Outputs (KPIs): peak grid import (MW) and peak reduction %, annual indicative value (AED), capex (AED), simple payback (years), resilience hours for critical load.
-  - Chart: **24-hour stacked chart** computed live: load line, solar, battery discharge, battery charge, grid import; plus the ghost "before" curve from scene 02.
+  - Chart: **24-hour stacked chart** computed live: load line, solar, battery discharge, battery charge, grid import; (the ghost "before" curve from scene 02 was dropped, see scene 02; the chart keeps its own baseline reference).
   - Assumptions drawer: every constant from `simulator-model.md`, labelled illustrative.
 - **Visual:** dashboard composition; KPI numbers large.
 - **Motion:** chart morphs smoothly between results (tween the data arrays, not redraw jumps); KPI numbers tween to new values; Core glow = peak reduction % (headline KPI; 0–60 % mapped to min–max glow).
@@ -143,7 +143,7 @@ Each scene lists: **Purpose · Content · Visual · Motion · Interaction · Exi
 
 - Kinetic typography: 01 (title), 02 (count-ups), 09 (the ask).
 - Animated system visualization: 04 (diagram flows), 05 (event chart).
-- Cross-scene continuity: the Core (01→02→03→04→07→09) and the ghost load curve (02→07).
+- Cross-scene continuity: the Core (01→02→03→04→07→09). The ghost load curve (02→07) was dropped in slice 5; the Core alone covers R08.
 - Motion techniques (≥3 distinct): SVG path drawing (02, 04, 08, 09) · camera/perspective/parallax (01, 03) · canvas particle system (06) · coordinated choreography (03, 08) · data morphing (07).
 - Distinctive scenes (≥2): 03 isometric 3D campus · 06 particle energy field (· 07 live dashboard).
 - Simulator: 07 (2 sliders + toggle + presets, live chart + KPIs).

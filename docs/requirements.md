@@ -8,17 +8,17 @@ Source of truth: the assignment PDF (keep it outside the repo / out of the deliv
 | R02 | 8–10 distinct, art-directed scenes forming a complete executive story (§2) | scenes 01–09 | storyboard walkthrough | ☐ |
 | R03 | Scene purposes 01–09 covered (opening, problem, opportunity, system, use case, capability, simulator, business case, roadmap & decision with explicit ask) (§2) | storyboard | walkthrough | ☐ |
 | R04 | Not a static card deck / converted PPT / video (§2 creative direction) | all | review | ☐ |
-| R05 | Every scene enters/exits smoothly; ≥3 composed transitions beyond a full-screen fade (§3.1) | transitions A, B, C | e2e + rehearsal | ◐ slice 4: transition A (+ reverse); B and C pending |
+| R05 | Every scene enters/exits smoothly; ≥3 composed transitions beyond a full-screen fade (§3.1) | transitions A, B, C | e2e + rehearsal | ◐ slice 4-5: transitions A and B (+ reverses); C pending |
 | R06 | Kinetic typography reinforcing the narrative (§3.1) | 01, 02, 09 | rehearsal | ◐ slice 4: 01 title + 02 counters; 09 pending |
-| R07 | ≥1 coherent animated system visualization (§3.1) | 04, 05 | rehearsal | ☐ |
-| R08 | Cross-scene continuity: element persists/transforms between scenes (§3.1) | GridNova Core; ghost load curve 02→07 | rehearsal | ◐ slice 4: Core hero → peak marker; ghost curve deferred |
-| R09 | ≥3 distinct motion techniques (§3.1) | SVG path drawing, camera/perspective/parallax, canvas particles, choreography, data morphing | code walkthrough | ◐ slice 3-4: morphing, count-up, path drawing, parallax |
-| R10 | Paced for live narration; replay/revisit; no disruptive auto-advance; pause or reduced-motion for looping visuals (§3.1) | motion.js, nav | e2e: no auto-advance; toggles | ◐ slice 1, 3, 4 (pause/reduced in 01, 02, 07) |
+| R07 | ≥1 coherent animated system visualization (§3.1) | 04, 05 | rehearsal | ◐ slice 5: 04 diagram (draw-in, flowing dashes, control pulses); 05 pending |
+| R08 | Cross-scene continuity: element persists/transforms between scenes (§3.1) | GridNova Core (ghost load curve 02→07 dropped, decision in slice 5) | rehearsal | ◐ slice 4-5: Core hero → peak marker → substation → controller node; 07 glow, 08-09 pending |
+| R09 | ≥3 distinct motion techniques (§3.1) | SVG path drawing, camera/perspective/parallax, canvas particles, choreography, data morphing | code walkthrough | ◐ slice 3-5: morphing, count-up, path drawing (02, 04), parallax, CSS 3D camera (03) |
+| R10 | Paced for live narration; replay/revisit; no disruptive auto-advance; pause or reduced-motion for looping visuals (§3.1) | motion.js, nav | e2e: no auto-advance; toggles | ◐ slice 1, 3-5 (pause/reduced in 01-04, 07; 04's flow loop stops on pause) |
 | R11 | Consistent design language, typography, restrained colour (§3.2) | tokens.css | review | ☐ |
-| R12 | ≥2 scenes with distinctive visual treatment (§3.2) | 03 isometric campus, 06 particle field | review | ☐ |
+| R12 | ≥2 scenes with distinctive visual treatment (§3.2) | 03 isometric campus, 06 particle field | review | ◐ slice 5: 03 CSS 3D campus; 06 pending |
 | R13 | Effects explain something; no ornamental time-wasting (§3.2) | all | review | ☐ |
 | R14 | Simulator: ≥2 inputs change visible numbers/space; ≥1 KPI or chart updates via real client-side logic (§3.3) | 07 | unit + e2e | ✅ slice 3 (unit + e2e) |
-| R15 | Exploratory interaction: select hotspot/component/layer/milestone for detail (§3.3) | 03 zones, 04 nodes, 09 phases | e2e | ☐ |
+| R15 | Exploratory interaction: select hotspot/component/layer/milestone for detail (§3.3) | 03 zones, 04 nodes, 09 phases | e2e | ◐ slice 5: 03 zones, 04 nodes + layer toggle (e2e); 09 pending |
 | R16 | Controlled comparison: before/after, day/night, normal/incident… with visible outcome (§3.3) | 05 with/without, 06 day/night, 07 normal/heatwave | e2e | ◐ slice 3: normal/heatwave; 05 and 06 pending |
 | R17 | Presenter navigation: next/prev, keyboard, visible progress/location, return to opening, resume a scene (§3.3) | nav.js, hash | e2e | ◐ slice 1 |
 | R18 | Simulator calculation, assumptions and visual state explainable (§3.3) | simulator-model.md, assumptions drawer | walkthrough | ◐ slice 3 built; walkthrough pending |

@@ -1,4 +1,5 @@
 import { gsap } from 'gsap';
+import { setNow } from '../ui/set-now.js';
 
 // The persistent GridNova Core (R08): ONE element above all scenes, moved to each scene's anchor.
 // Position is read from layout offsets (offsetLeft/Top), not getBoundingClientRect, so it is immune to
@@ -49,11 +50,11 @@ export function createCore(stageEl, motion) {
 
     // First-load reveal. hide() -> reveal() plays it; show() forces the settled look (also used to clean up
     // after an interrupted reveal or pulse). The orbit layer is faded only: its transform belongs to the orbit loop.
-    hide() { gsap.set(parts, { autoAlpha: 0 }); gsap.set(bodyParts, { scale: 0.4 }); },
+    hide() { setNow(parts, { autoAlpha: 0 }); setNow(bodyParts, { scale: 0.4 }); },
     reveal: () => gsap.timeline()
       .fromTo(bodyParts, { scale: 0.4 }, { scale: 1, duration: 0.8, ease: 'back.out(1.6)' }, 0)
       .fromTo(parts, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.5 }, 0),
-    show() { gsap.set(parts, { autoAlpha: 1 }); gsap.set(bodyParts, { scale: 1 }); },
+    show() { setNow(parts, { autoAlpha: 1 }); setNow(bodyParts, { scale: 1 }); },
 
     /** The orb element itself, for parallax (xPercent / yPercent do not fight the flight's x / y). */
     el: orb,

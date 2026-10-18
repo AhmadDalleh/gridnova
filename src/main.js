@@ -13,7 +13,7 @@ import { createCore } from './core/core-orb.js';
 import { createController } from './core/controller.js';
 import { transitions } from './core/transitions.js';
 import { createNav, parseHash } from './core/nav.js';
-import { DEFAULT_SIM } from './model/constants.js';
+import { DEFAULT_SIM, DEFAULT_UI } from './model/constants.js';
 import { createSimSelector } from './core/selectors.js';
 import { loadSim, persistSim } from './core/persist.js';
 
@@ -47,6 +47,8 @@ async function boot() {
     paused: false,
     reducedMotion: matchMedia('(prefers-reduced-motion: reduce)').matches,
     sim: loadSim(DEFAULT_SIM),
+    // Scene-level interaction state. Defaults are restored by each scene's reset() (Replay the story).
+    ui: { ...DEFAULT_UI },
   });
   persistSim(store);
   const selectSim = createSimSelector(store);   // one memoised selector shared by every scene
@@ -75,7 +77,7 @@ async function boot() {
     // Keep the URL in sync so a refresh (or a pasted link) resumes the same scene.
     onChange: (i) => history.replaceState(null, '', `#/scene-${i + 1}`),
   });
-  Object.assign(nav, { next: controller.next, prev: controller.prev, goTo: controller.goTo });
+  Object.assign(nav, { next: controller.next, prev: controller.prev, goTo: controller.goTo, replay: controller.replay });
   createNav({ controller, store, motion, scenes });
   // Test seam: the e2e suite opens the page with ?e2e to reach the controller (e.g. replay()). Nothing else uses it.
   if (location.search.includes('e2e')) window.__gridnova = { controller, store };

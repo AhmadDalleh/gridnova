@@ -1,0 +1,53 @@
+/* Scene 04, 1920x1080 stage pixels. The diagram SVG is 1200 x 760 placed at (100, 200): its units are stage pixels. */
+.s4-head { position: absolute; left: 120px; top: 56px; width: 1250px; }
+.s4-title { margin: 0; font: 700 72px/1.1 var(--font-display); }
+
+.s4-layers { position: absolute; left: 1420px; top: 70px; display: flex; gap: 0; }
+.s4-layers button { padding: 10px 24px; background: transparent; color: var(--text); border: 1px solid var(--line); font: 600 24px var(--font-body); cursor: pointer; }
+.s4-layers button:first-child { border-radius: 12px 0 0 12px; }
+.s4-layers button:last-child { border-radius: 0 12px 12px 0; }
+.s4-layers button[aria-pressed='true'] { background: var(--cyan); color: #04231f; border-color: var(--cyan); }
+.s4-layers button:focus-visible, .s4-node:focus-visible { outline: 3px solid var(--cyan); outline-offset: 3px; }
+
+.s4-svg { position: absolute; left: 100px; top: 200px; overflow: visible; }
+.s4-link { fill: none; stroke-width: 5; stroke-linecap: round; transition: opacity 0.35s; }
+.s4-link.power { stroke: var(--amber); }
+.s4-link.control { stroke: var(--cyan); stroke-width: 3; }
+.s4-link-label { fill: var(--text-dim); font: 500 22px var(--font-body); transition: opacity 0.35s; }
+.s4-pulse { fill: var(--cyan); filter: drop-shadow(0 0 6px var(--cyan)); }
+
+/* Layer toggle: the layer that is switched off fades to a ghost. */
+.layer-power .s4-link.control, .layer-power .s4-pulses { opacity: 0.06 !important; }
+.layer-control .s4-link.power, .layer-control .s4-link-label { opacity: 0.06 !important; }   /* !important: the draw-in sets inline opacity on labels */
+.s4-link.is-dim, .s4-link-label.is-dim { opacity: 0.12 !important; }
+
+.s4-node { cursor: pointer; transition: opacity 0.35s; }
+.s4-node-ring { fill: var(--bg-raised); stroke-width: 4; }
+.s4-node.amber .s4-node-ring { stroke: var(--amber); }
+.s4-node.cyan .s4-node-ring { stroke: var(--cyan); }
+.s4-node.coral .s4-node-ring { stroke: var(--coral); }
+.s4-node[data-node='controller'] .s4-node-ring { fill: rgba(70, 215, 193, 0.08); }
+.s4-icon { fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.s4-node.amber .s4-icon { stroke: var(--amber); }
+.s4-node.cyan .s4-icon { stroke: var(--cyan); }
+.s4-node.coral .s4-icon { stroke: var(--coral); }
+.s4-node-name { fill: var(--text); font: 600 26px var(--font-display); }
+.s4-node-verb { fill: var(--text-dim); font: 500 22px var(--font-body); letter-spacing: 0.08em; text-transform: uppercase; }
+.s4-node:hover .s4-node-ring, .s4-node.is-selected .s4-node-ring { stroke-width: 7; }
+.s4-node.is-dim { opacity: 0.35; }
+
+.s4-legend { position: absolute; left: 120px; top: 930px; margin: 0; padding: 0; list-style: none; display: flex; gap: 40px; font: 400 22px var(--font-body); color: var(--text-dim); }
+.s4-legend li { display: flex; align-items: center; gap: 12px; }
+.s4-key-power { stroke: var(--amber); stroke-width: 5; stroke-dasharray: 16 14; }
+.s4-key-control { stroke: var(--cyan); stroke-width: 3; stroke-dasharray: 4 12; stroke-linecap: round; }
+
+.s4-panel { position: absolute; left: 1420px; top: 150px; width: 380px; min-height: 640px; box-sizing: border-box; padding: 24px 28px; background: var(--bg-raised); border: 1px solid var(--line); border-radius: 16px; }
+.s4-panel-hint { margin: 0; font: 400 24px var(--font-body); color: var(--text-dim); }
+.s4-panel-verb { margin: 0; font: 500 22px var(--font-body); letter-spacing: 0.1em; text-transform: uppercase; color: var(--cyan); }
+.s4-panel-name { margin: 4px 0 8px; font: 700 38px/1.1 var(--font-display); }
+.s4-panel dl { margin: 0; font: 400 22px/1.3 var(--font-body); }
+.s4-panel dt { margin-top: 10px; color: var(--text-dim); font-weight: 600; }
+.s4-panel dd { margin: 0; }
+.s4-panel-live { margin: 14px 0 0; padding-top: 12px; border-top: 1px solid var(--line); font: 600 22px/1.3 var(--font-body); color: var(--amber); }
+
+.s4-core-anchor { position: absolute; pointer-events: none; left: 630px; top: 470px; width: 140px; height: 140px; }

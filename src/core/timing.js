@@ -25,3 +25,18 @@ export const TRANSITION_A_BACK = {
   core: 0.9,
   enterDelay: 0.15,
 };
+
+// B: 03 -> 04. Scene 03's camera dives into the substation (1.0 s) with the Core sitting on it; once the picture is
+// mostly white-out the Core travels to the diagram's centre and becomes the controller node, scene 04's frame fades in
+// behind it. Ends when the Core lands; scene 04 then draws its links (activate).
+export const TRANSITION_B = {
+  coreDelay: 0.45,   // the Core stays on the substation for the first part of the dive
+  core: 0.8,         // ends at 1.25 s = the whole transition
+  enterDelay: 0.8,   // scene 04's frame (0.45 s) is in place when the Core lands
+};
+// B reversed: 04 -> 03. The diagram leaves, the Core returns to the substation while the camera pulls out.
+export const TRANSITION_B_BACK = {
+  coreDelay: 0,
+  core: 0.8,
+  enterDelay: 0.2,   // scene 03's pull-out takes 0.9 s, so it ends with the Core's landing at 1.1 s
+};

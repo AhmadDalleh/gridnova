@@ -85,7 +85,7 @@ export function createNav({ controller, store, motion, scenes }) {
     // Navigation keys are ignored on buttons / inside the menu: Space or Enter on a focused button must
     // activate that button only, never ALSO change scene.
     const navKey = NAV_KEYS.has(e.key);
-    if (navKey && (ui.menuOpen || e.target.closest('button, a, [role="dialog"], [role="slider"]'))) return;
+    if (navKey && (ui.menuOpen || e.target.closest('button, a, [role="dialog"], [role="slider"], [role="button"]'))) return;
 
     const key = e.key.toLowerCase();
     if (navKey) {

@@ -16,6 +16,17 @@ export const PRESETS = {
 // Initial simulator state held in the store (Balanced, normal day). `preset` is a UI label only.
 export const DEFAULT_SIM = { solarMw: 4, batteryMwh: 8, dayType: 'normal', preset: 'balanced' };
 
+// Scene interaction state (not part of the model): selections and toggles in scenes 03-09. Lives in the store as `ui`.
+export const DEFAULT_UI = {
+  selectedZone: null,      // scene 03: zone id
+  selectedNode: null,      // scene 04: node id
+  layer: 'both',           // scene 04: 'power' | 'control' | 'both'
+  eventStage: 1,           // scene 05: 1..5
+  eventMode: 'with',       // scene 05: 'with' | 'without' GridNova
+  dayNight: 'day',         // scene 06: 'day' | 'night'
+  selectedPhase: null,     // scene 09: phase id
+};
+
 // ---- Campus load and solar (24 hourly values, 00:00-23:00) --------------------------------------
 // Normal-day campus load in MW; peak 10 MW at 15:00.
 export const LOAD_MW = [

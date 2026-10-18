@@ -1,5 +1,5 @@
 import { gsap } from 'gsap';
-import { STANDARD, TRANSITION_A, TRANSITION_A_BACK } from './timing.js';
+import { STANDARD, TRANSITION_A, TRANSITION_A_BACK, TRANSITION_B, TRANSITION_B_BACK } from './timing.js';
 
 // A transition builds ONE timeline that coordinates the outgoing scene, the Core and the incoming scene.
 // The controller plays it and waits for it. Composed transitions are keyed 'from>to' (scene indexes);
@@ -25,9 +25,10 @@ function composed(t) {
     if (args.reduced) return standard(args);
     const { from, to, dir, core } = args;
     const tl = gsap.timeline();
-    tl.add(from.exit(dir), 0);
+    // `{ composed: true }` tells a scene it is part of a composed transition (03 dives / pulls out, 04 and 08 skip their slide).
+    tl.add(from.exit(dir, { composed: true }), 0);
     tl.add(core.moveTo(to, { duration: t.core }), t.coreDelay);
-    tl.add(to.enter(dir), t.enterDelay);
+    tl.add(to.enter(dir, { composed: true }), t.enterDelay);
     return tl;
   };
 }
@@ -36,4 +37,6 @@ export const transitions = {
   standard,
   '0>1': composed(TRANSITION_A),        // A: title exits, Core flies to the curve's peak, curve draws on landing
   '1>0': composed(TRANSITION_A_BACK),   // A reversed: Core returns to the hero, scene 01 rebuilds
+  '2>3': composed(TRANSITION_B),         // B: camera dives into the substation, the Core becomes the controller node
+  '3>2': composed(TRANSITION_B_BACK),    // B reversed: the diagram leaves, the camera pulls out of the substation
 };
