@@ -1,4 +1,5 @@
 import { gsap } from 'gsap';
+import { STANDARD } from '../core/timing.js';
 
 // Placeholder scene factory (slice 1 only). Each real scene replaces its own folder's index.js later.
 // It implements the full scene contract so the controller is exercised exactly as it will be with real art.
@@ -23,18 +24,18 @@ export function createPlaceholderScene({ number, id, title, anchor }) {
       el.querySelector('.ph-title').textContent = title;   // textContent: titles may contain '&'
     },
 
-    // Choreography: scene slides in 40px from the travel direction while fading (crossfade only if reduced).
+    // Choreography: scene slides in from the travel direction while fading (crossfade only if reduced).
     enter(dir) {
       const reduced = ctx.store.get().reducedMotion;
       return gsap.timeline().fromTo(
         el,
-        { autoAlpha: 0, x: reduced ? 0 : 40 * dir },
-        { autoAlpha: 1, x: 0, duration: reduced ? 0.2 : 0.6, ease: 'power2.out' },
+        { autoAlpha: 0, x: reduced ? 0 : STANDARD.slide * dir },
+        { autoAlpha: 1, x: 0, duration: reduced ? STANDARD.reduced : STANDARD.enter, ease: 'power2.out' },
       );
     },
     exit(dir) {
       const reduced = ctx.store.get().reducedMotion;
-      return gsap.to(el, { autoAlpha: 0, x: reduced ? 0 : -40 * dir, duration: reduced ? 0.2 : 0.4, ease: 'power2.in' });
+      return gsap.to(el, { autoAlpha: 0, x: reduced ? 0 : -STANDARD.slide * dir, duration: reduced ? STANDARD.reduced : STANDARD.exit, ease: 'power2.in' });
     },
 
     activate() {},     // real scenes start loops / listeners here, through ctx.motion

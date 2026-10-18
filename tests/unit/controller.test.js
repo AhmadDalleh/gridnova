@@ -31,9 +31,10 @@ function setup({ paused = false, throwOnce = false } = {}) {
 
   const store = createStore({ sceneIndex: 0, paused, reducedMotion: false });
   const core = { snapTo() {}, moveTo() {} };
-  const controller = createController({ scenes, transitions, store, core });
+  const changes = [];
+  const controller = createController({ scenes, transitions, store, core, onChange: (i) => changes.push(i) });
   const finish = async () => { pendingFinish.shift()?.(); await new Promise((r) => setTimeout(r, 0)); };
-  return { controller, store, log, finish };
+  return { controller, store, log, finish, changes };
 }
 
 const tick = () => new Promise((r) => setTimeout(r, 0));
@@ -48,6 +49,22 @@ describe('controller', () => {
     expect(store.get().sceneIndex).toBe(2);
     expect(log.deactivated).toEqual([0]);
     expect(log.activated).toEqual([0, 2]);
+  });
+
+  it('store and hash follow the request immediately, before the transition ends', async () => {
+    const { controller, store, changes, finish } = setup();
+    await controller.start(0);
+    changes.length = 0;
+    controller.goTo(2);
+    expect(store.get().sceneIndex).toBe(2);       // synchronous: progress bar/counter update now
+    expect(changes).toEqual([2]);                 // hash update now
+    expect(controller.index).toBe(0);             // scene on screen is still the old one
+    controller.goTo(4);                           // queued request also shows immediately
+    expect(store.get().sceneIndex).toBe(4);
+    await finish();
+    await finish();
+    expect(controller.index).toBe(4);
+    expect(store.get().sceneIndex).toBe(4);
   });
 
   it('clamps to the valid range and ignores the current scene', async () => {

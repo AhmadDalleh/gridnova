@@ -25,7 +25,7 @@ test.afterEach(() => {
 const counter = (page) => page.locator('#counter');
 const label = (n) => `${String(n).padStart(2, '0')} / 09`;
 
-// Settled = counter shows the target AND exactly one scene is fully visible.
+// Settled = counter shows the target AND exactly one scene is fully visible AND the Core is on its anchor.
 async function expectScene(page, n) {
   await expect(counter(page)).toHaveText(label(n));
   await page.waitForFunction(() => {
@@ -33,7 +33,11 @@ async function expectScene(page, n) {
       const cs = getComputedStyle(s);
       return cs.visibility === 'visible' && Number(cs.opacity) > 0.5;
     });
-    return visible.length === 1 && Number(getComputedStyle(visible[0]).opacity) > 0.99 && !document.getElementById('preloader');
+    if (visible.length !== 1 || Number(getComputedStyle(visible[0]).opacity) <= 0.99 || document.getElementById('preloader')) return false;
+    // The counter now updates on the request, so "settled" also means the Core has arrived.
+    const c = document.getElementById('core').getBoundingClientRect();
+    const a = visible[0].querySelector('[data-core-anchor]').getBoundingClientRect();
+    return Math.hypot(c.left + c.width / 2 - (a.left + a.width / 2), c.top + c.height / 2 - (a.top + a.height / 2)) < 3;
   });
 }
 
@@ -165,6 +169,35 @@ test('pause and reduced motion stop the Core orbit loop; navigation still works'
   await expectScene(page, 3);
   await page.keyboard.press('r');
   await expect(page.locator('#chip-reduced')).toBeHidden();
+});
+
+test('Next updates progress at once and a standard transition finishes in under 0.8 s', async ({ page }) => {
+  await open(page);
+  await expectScene(page, 1);
+  // Measured inside the page (no Playwright round-trips): click Next, then time until the new scene is
+  // fully opaque, the old one hidden and the Core sits on the new anchor.
+  const r = await page.evaluate(() => new Promise((resolve) => {
+    const t0 = performance.now();
+    document.getElementById('btn-next').click();
+    const immediate = {
+      counter: document.getElementById('counter').textContent,
+      hash: location.hash,
+      current: document.querySelectorAll('#progress [aria-current="step"]').length,
+      second: document.querySelector('#progress li:nth-child(2) button').getAttribute('aria-current'),
+    };
+    const next = document.querySelector('.scene[data-scene="pressure"]');
+    const center = (el) => { const b = el.getBoundingClientRect(); return [b.left + b.width / 2, b.top + b.height / 2]; };
+    const done = () => {
+      const [cx, cy] = center(document.getElementById('core'));
+      const [ax, ay] = center(next.querySelector('[data-core-anchor]'));
+      return Number(getComputedStyle(next).opacity) > 0.99 && Math.hypot(cx - ax, cy - ay) < 3;
+    };
+    const poll = () => (done() ? resolve({ ms: performance.now() - t0, immediate }) : requestAnimationFrame(poll));
+    poll();
+  }));
+  expect(r.immediate).toEqual({ counter: '02 / 09', hash: '#/scene-2', current: 1, second: 'step' });
+  expect(r.ms).toBeLessThan(800);
+  console.log(`standard transition: ${Math.round(r.ms)} ms`);
 });
 
 test('no auto-advance', async ({ page }) => {

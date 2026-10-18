@@ -4,6 +4,7 @@
 //  - one transition at a time; a request made during a transition is stored in `pending`, last one wins
 //  - next()/prev() are relative to the DESTINATION (pending ?? inFlight ?? index), so rapid key presses accumulate
 //  - try/finally releases `busy` even if a timeline throws
+//  - the UI (store.sceneIndex, hash) follows the REQUEST immediately; `index` is only what is committed on screen
 //  - while paused, GSAP's clock is stopped, so a transition is jumped to its end instead of hanging
 export function createController({ scenes, transitions, store, core, onChange = () => {} }) {
   let index = -1;
@@ -27,15 +28,21 @@ export function createController({ scenes, transitions, store, core, onChange = 
     commit();
   }
 
+  // Progress bar, counter and URL hash follow the request at once, not the end of the transition.
+  function announce(target) {
+    store.set({ sceneIndex: target });
+    onChange(target);
+  }
+
   function commit() {
-    store.set({ sceneIndex: index });
-    onChange(index);
+    announce(index);
   }
 
   async function goTo(target) {
     target = clamp(target);
     if (busy) {
       pending = target;
+      announce(target);
       // A frozen (paused) transition would never finish on its own: finish it so the queue can drain.
       if (store.get().paused) activeTl?.progress(1);
       return;
@@ -44,6 +51,7 @@ export function createController({ scenes, transitions, store, core, onChange = 
 
     busy = true;
     inFlight = target;
+    announce(target);
     const from = scenes[index];
     const to = scenes[target];
     const dir = target > index ? 1 : -1;
@@ -55,7 +63,6 @@ export function createController({ scenes, transitions, store, core, onChange = 
       from.deactivate();
       index = target;
       to.activate();
-      commit();
     } finally {
       busy = false;
       inFlight = null;
