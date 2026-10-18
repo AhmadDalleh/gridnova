@@ -23,6 +23,9 @@ export const LOAD_MW = [
   9.5, 9.7, 9.9, 10.0, 9.8, 9.3, 8.6, 7.6, 6.6, 5.7, 5.0, 4.5,
 ];
 
+// Scene 02 narrative: the hours the story calls the peak exposure window (not computed by the model).
+export const PEAK_WINDOW = { from: 14, to: 17 };
+
 // Heatwave day: +10 % during the hot hours 10-19, +3 % otherwise.
 export const HEATWAVE = { hotFactor: 1.1, otherFactor: 1.03, hotFrom: 10, hotTo: 19 };
 

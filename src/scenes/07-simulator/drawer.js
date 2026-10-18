@@ -1,5 +1,5 @@
 import {
-  RANGES, LOAD_MW, HEATWAVE, SOLAR_SHAPE, BATTERY, ECON, EXCLUSIONS,
+  RANGES, LOAD_MW, PEAK_WINDOW, HEATWAVE, SOLAR_SHAPE, BATTERY, ECON, EXCLUSIONS,
 } from '../../model/constants.js';
 
 // Assumptions drawer: every constant is read from model/constants.js, so what the audience sees
@@ -18,6 +18,7 @@ function sections() {
     ]],
     ['Campus load and solar', [
       ['Normal-day peak', `${loadPeak} MW at ${hh(peakHour(LOAD_MW))}`],
+      ['Peak window (scene 02 story)', `${hh(PEAK_WINDOW.from)} to ${hh(PEAK_WINDOW.to)}`],
       ['Heatwave day', `+${Math.round((HEATWAVE.hotFactor - 1) * 100)} % from ${hh(HEATWAVE.hotFrom)} to ${hh(HEATWAVE.hotTo + 1)}, +${Math.round((HEATWAVE.otherFactor - 1) * 100)} % otherwise`],
       ['Solar output (clear day)', `peaks at ${Math.round(sunPeak * 100)} % of capacity at ${hh(peakHour(SOLAR_SHAPE))}`],
       ['Annual solar factor', `365 days × ${(ECON.annualSolarFactor / 365).toFixed(2)}`],

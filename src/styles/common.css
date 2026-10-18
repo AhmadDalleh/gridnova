@@ -1,0 +1,10 @@
+/* Pieces shared by several scenes. Scene-specific rules live in each scene's own scene.css. */
+.eyebrow { margin: 0 0 8px; font: 500 24px var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim); display: flex; align-items: center; gap: 20px; }
+.tag { padding: 2px 14px; border: 1px solid var(--line); border-radius: 999px; font: 500 22px var(--font-body); letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); }
+
+/* Kinetic typography: each word sits in a mask and rises out of it (ui/split.js). Bottom padding keeps descenders. */
+.w-mask { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: 0.16em; margin-bottom: -0.16em; }
+.w { display: inline-block; will-change: transform; }
+
+.primary-btn { padding: 18px 48px; background: var(--cyan); color: #04231f; border: 0; border-radius: 14px; font: 700 30px var(--font-display); cursor: pointer; }
+.primary-btn:hover { filter: brightness(1.1); }

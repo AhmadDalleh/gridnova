@@ -8,12 +8,12 @@ Source of truth: the assignment PDF (keep it outside the repo / out of the deliv
 | R02 | 8–10 distinct, art-directed scenes forming a complete executive story (§2) | scenes 01–09 | storyboard walkthrough | ☐ |
 | R03 | Scene purposes 01–09 covered (opening, problem, opportunity, system, use case, capability, simulator, business case, roadmap & decision with explicit ask) (§2) | storyboard | walkthrough | ☐ |
 | R04 | Not a static card deck / converted PPT / video (§2 creative direction) | all | review | ☐ |
-| R05 | Every scene enters/exits smoothly; ≥3 composed transitions beyond a full-screen fade (§3.1) | transitions A, B, C | e2e + rehearsal | ☐ |
-| R06 | Kinetic typography reinforcing the narrative (§3.1) | 01, 02, 09 | rehearsal | ☐ |
+| R05 | Every scene enters/exits smoothly; ≥3 composed transitions beyond a full-screen fade (§3.1) | transitions A, B, C | e2e + rehearsal | ◐ slice 4: transition A (+ reverse); B and C pending |
+| R06 | Kinetic typography reinforcing the narrative (§3.1) | 01, 02, 09 | rehearsal | ◐ slice 4: 01 title + 02 counters; 09 pending |
 | R07 | ≥1 coherent animated system visualization (§3.1) | 04, 05 | rehearsal | ☐ |
-| R08 | Cross-scene continuity: element persists/transforms between scenes (§3.1) | GridNova Core; ghost load curve 02→07 | rehearsal | ☐ |
-| R09 | ≥3 distinct motion techniques (§3.1) | SVG path drawing, camera/perspective/parallax, canvas particles, choreography, data morphing | code walkthrough | ◐ slice 3: data morphing + count-up |
-| R10 | Paced for live narration; replay/revisit; no disruptive auto-advance; pause or reduced-motion for looping visuals (§3.1) | motion.js, nav | e2e: no auto-advance; toggles | ◐ slice 1, 3 (pause/reduced in scene 07) |
+| R08 | Cross-scene continuity: element persists/transforms between scenes (§3.1) | GridNova Core; ghost load curve 02→07 | rehearsal | ◐ slice 4: Core hero → peak marker; ghost curve deferred |
+| R09 | ≥3 distinct motion techniques (§3.1) | SVG path drawing, camera/perspective/parallax, canvas particles, choreography, data morphing | code walkthrough | ◐ slice 3-4: morphing, count-up, path drawing, parallax |
+| R10 | Paced for live narration; replay/revisit; no disruptive auto-advance; pause or reduced-motion for looping visuals (§3.1) | motion.js, nav | e2e: no auto-advance; toggles | ◐ slice 1, 3, 4 (pause/reduced in 01, 02, 07) |
 | R11 | Consistent design language, typography, restrained colour (§3.2) | tokens.css | review | ☐ |
 | R12 | ≥2 scenes with distinctive visual treatment (§3.2) | 03 isometric campus, 06 particle field | review | ☐ |
 | R13 | Effects explain something; no ornamental time-wasting (§3.2) | all | review | ☐ |

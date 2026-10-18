@@ -1,7 +1,5 @@
 /* Scene 07 is authored in 1920x1080 stage pixels. Body text >= 22px. Content stays above y=950 (the HUD overlaps below). */
 .s7-head { position: absolute; left: 120px; top: 56px; width: 1480px; }
-.eyebrow { margin: 0 0 8px; font: 500 24px var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim); display: flex; align-items: center; gap: 20px; }
-.tag { padding: 2px 14px; border: 1px solid var(--line); border-radius: 999px; font-size: 22px; letter-spacing: 0.1em; color: var(--text-dim); }
 .s7-title { margin: 0; font: 700 64px/1.1 var(--font-display); }
 .s7-core-anchor { position: absolute; left: 1650px; top: 30px; width: 150px; height: 150px; }
 

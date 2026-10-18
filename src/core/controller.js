@@ -75,9 +75,25 @@ export function createController({ scenes, transitions, store, core, onChange = 
     }
   }
 
+  // "Replay the story": every scene goes back to its first-visit state, then we return to scene 01.
+  // The scene on screen is reset AFTER it has left (resetting it mid-exit would blank it while it fades).
+  // Simulator inputs live in the store and are not touched.
+  async function replay() {
+    const leaving = index;
+    scenes.forEach((s, i) => { if (i !== leaving || leaving === 0) s.reset?.(); });
+    if (leaving === 0 && !busy) {
+      scenes[0].deactivate();
+      await start(0);                          // already on 01: play its opening again in place
+      return;
+    }
+    await goTo(0);
+    scenes[leaving].reset?.();
+  }
+
   return {
     start,
     goTo,
+    replay,
     next: () => goTo(destination() + 1),
     prev: () => goTo(destination() - 1),
     get index() { return index; },

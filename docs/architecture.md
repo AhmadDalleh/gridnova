@@ -91,16 +91,20 @@ Each `scenes/NN-name/index.js` exports:
 ```js
 export default {
   id: 'pressure', title: 'The pressure', coreAnchor: '[data-core-anchor]',
-  mount(root, ctx) {},      // once: build DOM, cache nodes, create (paused) timelines. ctx = { store, motion, core, selectSim }
+  mount(root, ctx) {},      // once: build DOM, cache nodes, create (paused) timelines. ctx = { store, motion, core, selectSim, nav }   // nav = { next, prev, goTo }: how a scene's own button (e.g. Begin) navigates
   enter(direction) {},      // returns a GSAP timeline: a QUICK reveal of the scene frame (must fit the standard transition budget, src/core/timing.js)
   exit(direction) {},       // returns a timeline for leaving (may be very short)
   activate() {},            // after enter: play the meaningful choreography (chart draws, count-ups, ~2 s), start loops, add listeners via ctx.motion.scope()
   deactivate() {},          // after exit: stop loops, abort listeners; keep state
-  reset() {},               // used by "Replay the story": timelines back to start, interaction UI to defaults (NOT simulator state)
+  reset() {},               // used by "Replay the story" (controller.replay()): the scene is a first visit again, so its opening plays in full on the next enter(); interaction UI to defaults (NOT simulator state)
 };
 ```
 
 **Entrance rule (timing):** the controller awaits `enter()`, so it must stay within the standard transition budget (`timing.js`, <= 0.7 s). Anything longer (chart drawing, count-ups, staggered cards) is a timeline built in `activate()` and killed in `deactivate()`; it never blocks navigation. When paused or in reduced motion, `activate()` jumps that timeline to its end state (a paused global clock would otherwise leave the scene half-drawn).
+
+**Composed transitions** (`transitions.js`, keyed `'from>to'`, timings in `timing.js`) only decide WHEN `from.exit()`, the Core flight and `to.enter()` start; each scene owns what its exit/enter look like. A composed transition ends when the Core lands, so the incoming scene's `activate()` choreography starts at the landing (A: scene 02's curve). Every composed transition has a reverse key and falls back to the standard cross-fade in reduced motion.
+
+**Interrupting a scene:** `exit()` kills a running `activate()` timeline and snaps the scene to its settled look before animating out, so nothing half-finished is left behind. Hard resets of shared things (e.g. the Core's parallax offset) must not kill tweens a transition created earlier, such as the Core flight.
 
 Separation of **state** from **DOM effects**: interactive state lives in the store (or in a small per-scene state object); render functions read state and update the DOM. Event handlers only change state. This is what you explain when asked about "lifecycle of interactive state".
 
@@ -141,6 +145,7 @@ Must hold for the built `dist/index.html`:
 
 - **Unit (Vitest):** `simulate()` reference values (simulator-model.md §6) and invariants; controller: rapid `goTo` calls never overlap, pending wins, bounds, reverse; store subscribe/unsubscribe.
 - **E2E (Playwright, Chromium, and Edge channel if installed):** `npm run build` then open `file:///<abs>/dist/index.html` with all `http(s)` requests aborted. Checks: no console errors; navigate all 9 scenes forward and back with keys; hash resume; simulator: set sliders → KPI text changes and equals model output; leave and return → values kept; pause and reduced-motion toggles; screenshots of every scene at **1920×1080** and **1366×768** saved to `docs/verification/` (committed as evidence).
+- **Test seam:** opening the page with `?e2e` exposes `window.__gridnova = { controller, store }` (main.js) so e2e tests can call `controller.replay()`. Nothing in the app uses it.
 - **Manual:** presenter rehearsal checklist in `docs/verification/manual-checklist.md` (offline with Wi-Fi off, Chrome and Edge, fullscreen, clicker keys).
 
 ## 11. Deliverable ZIP layout

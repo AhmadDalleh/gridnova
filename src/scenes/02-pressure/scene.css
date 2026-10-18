@@ -1,0 +1,29 @@
+/* Scene 02, 1920x1080 stage pixels. Text >= 22px; content stays above y=950. */
+.s2-head { position: absolute; left: 120px; top: 56px; width: 1500px; }
+.s2-title { margin: 0; font: 700 72px/1.1 var(--font-display); }
+.s2-core-anchor { position: absolute; }
+
+.s2-chart { position: absolute; left: 120px; top: 230px; }
+#s2-chart { width: 1220px; height: 640px; display: block; border-radius: 12px; }
+#s2-chart:focus-visible { outline: 3px solid var(--cyan); outline-offset: 6px; }
+.s2-grid-line { stroke: var(--line); stroke-width: 1; }
+.s2-tick { fill: var(--text-dim); font: 400 22px var(--font-body); }
+.s2-unit { font-weight: 600; }
+.s2-band rect { fill: var(--coral); opacity: 0.16; }
+.s2-band text { fill: var(--coral); font: 600 22px var(--font-body); }
+.s2-curve { fill: none; stroke: var(--coral); stroke-width: 6; stroke-linejoin: round; stroke-linecap: round; }
+.s2-pen { fill: var(--text); stroke: var(--coral); stroke-width: 4; opacity: 0; }
+.s2-clock { fill: var(--text); font: 700 44px var(--font-display); font-variant-numeric: tabular-nums; }
+.s2-hover-line { stroke: var(--text); stroke-width: 1; opacity: 0.6; }
+.s2-hover-dot { fill: var(--text); stroke: var(--coral); stroke-width: 4; }
+.s2-hover-text { fill: var(--text); font: 600 24px var(--font-body); }
+
+.s2-stats { position: absolute; left: 1380px; top: 230px; width: 420px; display: grid; gap: 12px; }
+.s2-stat { padding: 14px 22px; background: var(--bg-raised); border: 1px solid var(--line); border-radius: 14px; }
+.s2-stat-label { margin: 0; font: 500 22px var(--font-body); color: var(--text-dim); }
+.s2-stat-value { margin: 0; font: 700 60px/1.1 var(--font-display); font-variant-numeric: tabular-nums; }
+.s2-stat[data-stat='peak'] .s2-stat-value, .s2-stat[data-stat='share'] .s2-stat-value, .s2-stat[data-stat='window'] .s2-stat-value { color: var(--coral); }
+.s2-stat[data-stat='demand'] .s2-stat-value { color: var(--amber); }
+.s2-stat-sub { margin: 0; font: 400 22px var(--font-body); color: var(--text-dim); }
+
+.s2-note { position: absolute; left: 124px; top: 895px; margin: 0; font: 400 22px var(--font-body); color: var(--text-dim); }

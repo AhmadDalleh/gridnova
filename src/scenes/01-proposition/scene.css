@@ -1,0 +1,31 @@
+/* Scene 01, 1920x1080 stage pixels. Text >= 22px. */
+.s1-layer { position: absolute; inset: 0; pointer-events: none; }
+
+/* Depth layer 1 (0.3): a faint grid that fades toward the edges */
+.s1-grid {
+  inset: -80px;
+  background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 120px 120px; opacity: 0.35;
+  -webkit-mask-image: radial-gradient(ellipse 60% 60% at 72% 50%, #000 0%, transparent 100%);
+  mask-image: radial-gradient(ellipse 60% 60% at 72% 50%, #000 0%, transparent 100%);
+}
+
+/* Depth layer 2 (0.6): slow dots, the depth cue for the parallax (dots.js) */
+.s1-dot { position: absolute; left: 0; top: 0; border-radius: 50%; background: var(--text); }
+
+/* Depth layer 3 (0.8): rings and orbit labels around the Core */
+.s1-ring { position: absolute; border-radius: 50%; border: 1px solid rgba(70, 215, 193, 0.28); }
+.s1-ring:nth-child(2) { border-color: rgba(70, 215, 193, 0.18); }
+.s1-ring:nth-child(3) { border-color: rgba(70, 215, 193, 0.1); }
+.s1-label { position: absolute; transform: translate(-50%, -50%); font: 600 24px var(--font-body); letter-spacing: 0.18em; text-transform: uppercase; white-space: nowrap; }
+
+.s1-core-anchor { position: absolute; width: 520px; height: 520px; }
+
+.s1-tag { position: absolute; left: 120px; top: 70px; }
+.s1-eyebrow { position: absolute; left: 120px; top: 150px; margin: 0; }
+.s1-title { position: absolute; left: 120px; top: 215px; margin: 0; font: 700 150px/1 var(--font-display); letter-spacing: -0.01em; }
+.s1-title .line { display: block; }
+/* "balance." starts as an outline only; the fill sweeps in after the outline has been drawn (index.js) */
+.balance { color: transparent; -webkit-text-stroke: 3px var(--cyan); }
+.s1-sub { position: absolute; left: 124px; top: 740px; width: 780px; margin: 0; font: 400 30px/1.4 var(--font-body); color: var(--text-dim); }
+.s1-begin { position: absolute; left: 124px; top: 860px; }

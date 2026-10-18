@@ -18,6 +18,8 @@ function anchorBox(sceneEl, selector) {
 export function createCore(stageEl, motion) {
   const orb = stageEl.querySelector('#core');
   const orbit = orb.querySelector('.core-orbit');
+  const bodyParts = [orb.querySelector('.core-glow'), orb.querySelector('.core-body')];
+  const parts = [...bodyParts, orbit];
 
   // The amber dot orbits through the motion manager, so it stops on pause / reduced motion / hidden tab.
   let angle = 0;
@@ -41,7 +43,19 @@ export function createCore(stageEl, motion) {
         duration: 0.9, ease: 'power3.inOut', ...vars,
       });
     },
-    pulse: () => gsap.fromTo(orb, { scale: 1 }, { scale: 1.15, yoyo: true, repeat: 1, duration: 0.25 }),
+    /** One beat on the Core: body and glow swell and settle. Scales the CHILDREN (centre origin), not the orb itself. */
+    pulse: () => gsap.fromTo(bodyParts, { scale: 1 }, { scale: 1.25, yoyo: true, repeat: 1, duration: 0.25, ease: 'power2.out' }),
     setGlow: (value) => orb.style.setProperty('--glow', String(value)),
+
+    // First-load reveal. hide() -> reveal() plays it; show() forces the settled look (also used to clean up
+    // after an interrupted reveal or pulse). The orbit layer is faded only: its transform belongs to the orbit loop.
+    hide() { gsap.set(parts, { autoAlpha: 0 }); gsap.set(bodyParts, { scale: 0.4 }); },
+    reveal: () => gsap.timeline()
+      .fromTo(bodyParts, { scale: 0.4 }, { scale: 1, duration: 0.8, ease: 'back.out(1.6)' }, 0)
+      .fromTo(parts, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.5 }, 0),
+    show() { gsap.set(parts, { autoAlpha: 1 }); gsap.set(bodyParts, { scale: 1 }); },
+
+    /** The orb element itself, for parallax (xPercent / yPercent do not fight the flight's x / y). */
+    el: orb,
   };
 }

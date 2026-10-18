@@ -4,6 +4,7 @@ import './styles/tokens.css';
 import './styles/base.css';
 import './styles/stage.css';
 import './styles/nav.css';
+import './styles/common.css';
 
 import { createStore } from './core/store.js';
 import { createMotion } from './core/motion.js';
@@ -54,12 +55,13 @@ async function boot() {
   const core = createCore(stageEl, motion);
 
   // Mount every scene once into its own container; the controller only ever shows/hides containers.
+  const nav = {};                               // filled once the controller exists (scenes call ctx.nav.next())
   const scenes = sceneModules.map((module) => {
     const root = document.createElement('section');
     root.className = 'scene';
     root.dataset.scene = module.id;
     scenesEl.append(root);
-    module.mount(root, { store, motion, core, selectSim });
+    module.mount(root, { store, motion, core, selectSim, nav });
     return { ...module, el: root };
   });
 
@@ -73,7 +75,10 @@ async function boot() {
     // Keep the URL in sync so a refresh (or a pasted link) resumes the same scene.
     onChange: (i) => history.replaceState(null, '', `#/scene-${i + 1}`),
   });
+  Object.assign(nav, { next: controller.next, prev: controller.prev, goTo: controller.goTo });
   createNav({ controller, store, motion, scenes });
+  // Test seam: the e2e suite opens the page with ?e2e to reach the controller (e.g. replay()). Nothing else uses it.
+  if (location.search.includes('e2e')) window.__gridnova = { controller, store };
 
   const hashIndex = parseHash();
   await controller.start(hashIndex ?? 0);

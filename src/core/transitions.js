@@ -1,19 +1,39 @@
 import { gsap } from 'gsap';
-import { STANDARD } from './timing.js';
+import { STANDARD, TRANSITION_A, TRANSITION_A_BACK } from './timing.js';
 
 // A transition builds ONE timeline that coordinates the outgoing scene, the Core and the incoming scene.
-// The controller plays it and waits for it. Composed transitions (A, B, C) are added to this map later,
-// keyed 'from>to' (e.g. '0>1'); anything without an entry uses `standard`.
-export const transitions = {
-  // Choreography (all times from timing.js): outgoing scene leaves and the Core starts travelling at t=0;
-  // the incoming scene starts `enterDelay` later, so the two overlap instead of leaving a gap.
-  // Total = enterDelay + enter (0.55 s). Reduced motion: cross-fade only, everything starts together.
-  standard({ from, to, dir, core, reduced }) {
+// The controller plays it and waits for it. Composed transitions are keyed 'from>to' (scene indexes);
+// anything without an entry uses `standard`.
+
+// Choreography (all times from timing.js): outgoing scene leaves and the Core starts travelling at t=0;
+// the incoming scene starts `enterDelay` later, so the two overlap instead of leaving a gap.
+// Total = the longest layer = max(core 0.6, enterDelay + enter 0.55) = 0.6 s. Reduced motion: cross-fade only, everything starts together.
+function standard({ from, to, dir, core, reduced }) {
+  const tl = gsap.timeline();
+  tl.add(from.exit(dir), 0);
+  // Core is created BEFORE to.enter() so it measures the anchor before enter() sets any offset.
+  tl.add(core.moveTo(to, reduced ? { duration: STANDARD.reduced, ease: 'none' } : { duration: STANDARD.core }), 0);
+  tl.add(to.enter(dir), reduced ? 0 : STANDARD.enterDelay);
+  return tl;
+}
+
+// Same three layers as `standard`, but the Core gets its own long flight (a hero move, not a tag-along).
+// The scenes own what "exit" and "enter" look like (scene 01's exit is the title-word stagger), so this
+// only decides WHEN things start. Reduced motion falls back to the plain cross-fade.
+function composed(t) {
+  return (args) => {
+    if (args.reduced) return standard(args);
+    const { from, to, dir, core } = args;
     const tl = gsap.timeline();
     tl.add(from.exit(dir), 0);
-    // Core is created BEFORE to.enter() so it measures the anchor before enter() sets any offset.
-    tl.add(core.moveTo(to, reduced ? { duration: STANDARD.reduced, ease: 'none' } : { duration: STANDARD.core }), 0);
-    tl.add(to.enter(dir), reduced ? 0 : STANDARD.enterDelay);
+    tl.add(core.moveTo(to, { duration: t.core }), t.coreDelay);
+    tl.add(to.enter(dir), t.enterDelay);
     return tl;
-  },
+  };
+}
+
+export const transitions = {
+  standard,
+  '0>1': composed(TRANSITION_A),        // A: title exits, Core flies to the curve's peak, curve draws on landing
+  '1>0': composed(TRANSITION_A_BACK),   // A reversed: Core returns to the hero, scene 01 rebuilds
 };
