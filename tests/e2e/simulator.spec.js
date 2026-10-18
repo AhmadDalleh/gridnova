@@ -118,7 +118,7 @@ test('assumptions drawer lists the model constants and closes with Escape', asyn
   await openSimulator(page);
   await page.click('#btn-assumptions');
   await expect(page.locator('#s7-drawer')).toBeVisible();
-  await expect(page.locator('.drawer-body .row')).toHaveCount(16);
+  await expect(page.locator('.drawer-body .row')).toHaveCount(17);
   const text = await page.locator('#s7-drawer').innerText();
   for (const s of ['AED 300 / MWh', 'AED 40,000 / MW / month', 'AED 3 M / MW', 'AED 1.1 M / MWh', '1.5 % of capex', '2.5 MW', 'Battery degradation', 'Illustrative']) {
     expect(text.toLowerCase()).toContain(s.toLowerCase());

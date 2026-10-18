@@ -17,7 +17,7 @@ const counter = (page) => page.locator('#counter');
 test('loads offline with a clean console and scene 1 visible', async ({ page }) => {
   await open(page);
   await expectScene(page, 1);
-  await expect(page.locator('.scene[data-scene="proposition"] .ph-title')).toHaveText('The proposition');
+  await expect(page.locator('.scene[data-scene="proposition"] h1')).toHaveText(/Energy,\s+in better\s+balance\./);
   const fontsOk = await page.evaluate(() => ['500 1em "Space Grotesk"', '700 1em "Space Grotesk"', '400 1em Inter', '600 1em Inter'].every((f) => document.fonts.check(f)));
   expect(fontsOk).toBe(true);
 });
@@ -32,14 +32,14 @@ test('keyboard walks all 9 scenes forward and back; the Core follows each anchor
   for (let n = 2; n <= 9; n++) {
     await page.keyboard.press('ArrowRight');
     await expectScene(page, n);
-    expect(await coreAtAnchor()).toBeLessThan(3);
+    await expect.poll(coreAtAnchor, { message: `Core distance to the anchor of scene ${n}` }).toBeLessThan(3);   // it eases in: poll until settled
   }
   await page.keyboard.press('ArrowRight');              // past the end: stays on 9
   await expectScene(page, 9);
   for (let n = 8; n >= 1; n--) {
     await page.keyboard.press('ArrowLeft');
     await expectScene(page, n);
-    expect(await coreAtAnchor()).toBeLessThan(3);
+    await expect.poll(coreAtAnchor, { message: `Core distance to the anchor of scene ${n}` }).toBeLessThan(3);   // it eases in: poll until settled
   }
   await page.keyboard.press('End');
   await expectScene(page, 9);
@@ -140,8 +140,8 @@ test('pause and reduced motion stop the Core orbit loop; navigation still works'
 });
 
 test('Next updates progress at once and a standard transition finishes in under 0.8 s', async ({ page }) => {
-  await open(page);
-  await expectScene(page, 1);
+  await open(page, '#/scene-2');                         // 02 -> 03 is a standard transition (01 -> 02 is composed A)
+  await expectScene(page, 2);
   // Measured inside the page (no Playwright round-trips): click Next, then time until the new scene is
   // fully opaque, the old one hidden and the Core sits on the new anchor.
   const r = await page.evaluate(() => new Promise((resolve) => {
@@ -151,9 +151,9 @@ test('Next updates progress at once and a standard transition finishes in under 
       counter: document.getElementById('counter').textContent,
       hash: location.hash,
       current: document.querySelectorAll('#progress [aria-current="step"]').length,
-      second: document.querySelector('#progress li:nth-child(2) button').getAttribute('aria-current'),
+      second: document.querySelector('#progress li:nth-child(3) button').getAttribute('aria-current'),
     };
-    const next = document.querySelector('.scene[data-scene="pressure"]');
+    const next = document.querySelector('.scene[data-scene="opportunity"]');
     const center = (el) => { const b = el.getBoundingClientRect(); return [b.left + b.width / 2, b.top + b.height / 2]; };
     const done = () => {
       const [cx, cy] = center(document.getElementById('core'));
@@ -163,7 +163,7 @@ test('Next updates progress at once and a standard transition finishes in under 
     const poll = () => (done() ? resolve({ ms: performance.now() - t0, immediate }) : requestAnimationFrame(poll));
     poll();
   }));
-  expect(r.immediate).toEqual({ counter: '02 / 09', hash: '#/scene-2', current: 1, second: 'step' });
+  expect(r.immediate).toEqual({ counter: '03 / 09', hash: '#/scene-3', current: 1, second: 'step' });
   expect(r.ms).toBeLessThan(800);
   console.log(`standard transition: ${Math.round(r.ms)} ms`);
 });
@@ -179,6 +179,7 @@ test('screenshots of all 9 scenes at 1920x1080 and 1366x768', async ({ page }, t
   mkdirSync(SHOTS, { recursive: true });
   for (const [w, h] of [[1920, 1080], [1366, 768]]) {
     await page.setViewportSize({ width: w, height: h });
+    await page.goto('about:blank');                          // a hash-only goto would reuse the open page
     await open(page);
     const scale = await page.locator('#stage').evaluate((e) => Number(e.dataset.scale));
     expect(scale).toBeCloseTo(Math.min(w / 1920, h / 1080), 3);
@@ -189,7 +190,7 @@ test('screenshots of all 9 scenes at 1920x1080 and 1366x768', async ({ page }, t
     for (let n = 1; n <= 9; n++) {
       if (n > 1) await page.keyboard.press('ArrowRight');
       await expectScene(page, n);
-      await page.waitForTimeout(150);
+      await page.waitForTimeout(n <= 2 ? 3200 : 150);          // scenes 01 and 02 run their choreography first
       await page.screenshot({ path: `${SHOTS}/slice1-${w}x${h}-scene-${String(n).padStart(2, '0')}.png` });
     }
   }
