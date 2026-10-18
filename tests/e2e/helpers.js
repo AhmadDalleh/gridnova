@@ -3,7 +3,8 @@ import { pathToFileURL } from 'node:url';
 import { resolve } from 'node:path';
 
 // Shared by every e2e spec: open the BUILT dist/index.html via file:// with the network blocked.
-export const URL_BASE = pathToFileURL(resolve('dist/index.html')).href;
+// GRIDNOVA_INDEX points the suite at another built file (the unzipped release) instead of dist/index.html.
+export const URL_BASE = pathToFileURL(resolve(process.env.GRIDNOVA_INDEX ?? 'dist/index.html')).href;
 export const SHOTS = resolve('docs/verification');
 export const label = (n) => `${String(n).padStart(2, '0')} / 09`;
 

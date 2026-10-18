@@ -4,7 +4,7 @@ import { resolve } from 'node:path';
 
 // Static check of the BUILT file: nothing in it may point outside itself (R19, R20).
 // The single inline <script type="module"> that vite-plugin-singlefile emits is allowed; external references are not.
-const dist = resolve('dist/index.html');
+const dist = resolve(process.env.GRIDNOVA_INDEX ?? 'dist/index.html');
 const html = readFileSync(dist, 'utf8');
 
 // Strings (not network requests) that libraries embed: XML namespace ids, and the docs link inside GSAP's warning text.
