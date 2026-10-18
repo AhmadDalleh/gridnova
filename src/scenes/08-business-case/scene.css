@@ -1,0 +1,36 @@
+/* Scene 08, 1920x1080 stage pixels. SVGs are shown 1:1 so text stays >= 22 px. */
+.s8-head { position: absolute; left: 120px; top: 50px; width: 1500px; }
+.s8-title { margin: 0; font: 700 64px/1.1 var(--font-display); }
+.s8-note { position: absolute; left: 120px; top: 150px; margin: 0; font: 400 22px var(--font-body); color: var(--text-dim); }
+.s8-core-anchor { position: absolute; left: 1700px; top: 50px; width: 100px; height: 100px; pointer-events: none; }
+
+.s8-cards { position: absolute; left: 120px; top: 196px; width: 1680px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.s8-card { padding: 10px 22px; background: var(--bg-raised); border: 1px solid var(--line); border-radius: 14px; }
+.s8-card:hover, .s8-card:focus-visible { border-color: var(--cyan); outline: none; }
+.s8-card h3 { margin: 0; font: 500 22px var(--font-body); color: var(--text-dim); }
+.s8-card-value { margin: 0; font: 700 52px/1.1 var(--font-display); font-variant-numeric: tabular-nums; }
+.s8-card[data-card='capex'] .s8-card-value { color: var(--coral); }
+.s8-card[data-card='net'] .s8-card-value { color: var(--cyan); }
+.s8-card[data-card='payback'] .s8-card-value, .s8-card[data-card='peak'] .s8-card-value { color: var(--amber); }
+
+.s8-chart { position: absolute; top: 332px; }
+.s8-chart h2 { margin: 0 0 4px; font: 600 24px var(--font-body); color: var(--text-dim); }
+.s8-wf { left: 120px; }
+.s8-cf { left: 980px; }
+.s8-chart svg { display: block; overflow: visible; }
+.s8-axis { stroke: var(--line); stroke-width: 1; }
+.s8-zero { stroke: var(--text-dim); stroke-width: 2; stroke-dasharray: 6 6; }
+.s8-txt { fill: var(--text-dim); font: 400 22px var(--font-body); }
+.s8-val { fill: var(--text); font: 700 22px var(--font-display); text-anchor: middle; }
+.s8-bar { cursor: pointer; outline: none; }
+.s8-bar rect { transition: filter 0.2s; }
+.s8-bar:hover rect, .s8-bar:focus-visible rect { filter: brightness(1.35); stroke: var(--text); stroke-width: 3; }
+.s8-bar.amber rect { fill: var(--amber); } .s8-bar.cyan rect { fill: var(--cyan); }
+.s8-bar.coral rect { fill: var(--coral); } .s8-bar.total rect { fill: #cfe9e4; }
+.s8-cash { fill: none; stroke: var(--cyan); stroke-width: 6; stroke-linejoin: round; stroke-linecap: round; }
+.s8-pay circle { fill: var(--bg); stroke: var(--amber); stroke-width: 5; }
+.s8-pay text { fill: var(--amber); font: 700 24px var(--font-display); text-anchor: middle; }
+
+.s8-formula { position: absolute; left: 120px; top: 730px; width: 1680px; margin: 0; padding: 10px 20px; box-sizing: border-box; min-height: 58px; background: var(--bg-raised); border-left: 4px solid var(--cyan); font: 500 24px var(--font-body); }
+.s8-assume { position: absolute; left: 120px; width: 1500px; margin: 0; font: 400 22px/1.35 var(--font-body); color: var(--text-dim); }
+.s8-assume b { color: var(--text); }
