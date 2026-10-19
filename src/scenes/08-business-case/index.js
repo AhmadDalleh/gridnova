@@ -29,6 +29,7 @@ let titleWords;
 let scope;
 let choreo;
 let prepared = false;
+let cardsLanded = false;                            // transition C already delivered the card numbers
 const wf = { bars: [], k: [] };                     // per-bar progress 0..1
 const cf = { line: null, len: 0, zero: null, pay: null, payText: null, payCircle: null, ticks: null };
 const kAll = (v) => Object.fromEntries(fig.bars.map((_, i) => [i, v]));   // plain object: gsap would treat an array as a list of targets
@@ -147,22 +148,37 @@ export default {
     load();
   },
 
-  enter(dir) {
+  enter(dir, { composed = false } = {}) {
     const { reducedMotion } = ctx.store.get();
     load();                                           // always the current simulator state
     n.formula.textContent = HINT;
     const animate = canAnimate(ctx.store);
     if (animate) showStart(); else showFinal();
     prepared = animate;
+    cardsLanded = false;
+    if (composed && !reducedMotion) {                 // transition C: the KPI numbers fly into the cards; the rest fades in
+      cardsLanded = true;
+      n.cards.forEach((c, i) => { c.value.textContent = fig.cards[i].format(fig.cards[i].value); });
+      setNow(n.cards.map((c) => c.el), { autoAlpha: 1, y: 0 });
+      setNow(el, { x: 0 });
+      const tl = gsap.timeline().fromTo(el, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.45, ease: 'power1.out' });
+      return tl.fromTo(titleWords, { yPercent: 110 }, { yPercent: 0, duration: 0.3, ease: 'power3.out', stagger: 0.04 }, 0.05);
+    }
     const tl = revealScene(el, reducedMotion, dir);
     if (animate) tl.fromTo(titleWords, { yPercent: 110 }, { yPercent: 0, duration: 0.3, ease: 'power3.out', stagger: 0.04 }, 0.05);
     return tl;
   },
 
-  exit(dir) {
+  /** The card numbers that receive the KPI numbers flying in from scene 07 (and fly back to it). */
+  flyPoints() {
+    return n.cards.map((c) => c.value);
+  },
+
+  exit(dir, { composed = false } = {}) {
     if (choreo?.isActive() || prepared) { choreo?.kill(); countersOn().forEach((c) => c._countTween?.kill()); showFinal(); }
     choreo = null;
     prepared = false;
+    if (composed) return gsap.to(el, { autoAlpha: 0, duration: 0.45, delay: 0.45, ease: 'power1.in' });
     return hideScene(el, ctx.store.get().reducedMotion, dir);
   },
 
@@ -174,8 +190,9 @@ export default {
     prepared = false;
     if (!canAnimate(ctx.store)) { showFinal(); return; }
     choreo = gsap.timeline();
-    choreo.to(n.cards.map((c) => c.el), { autoAlpha: 1, y: 0, duration: 0.4, ease: 'power2.out', stagger: 0.08 }, 0);
+    if (!cardsLanded) choreo.to(n.cards.map((c) => c.el), { autoAlpha: 1, y: 0, duration: 0.4, ease: 'power2.out', stagger: 0.08 }, 0);
     n.cards.forEach((c, i) => {
+      if (cardsLanded) return;
       if (fig.cards[i].value === null) c.value.textContent = fig.cards[i].format(null);        // payback "n/a": nothing to count
       else choreo.add(countTo(c.value, fig.cards[i].value, { format: fig.cards[i].format, duration: 0.9 }), 0.05 + i * 0.08);
     });

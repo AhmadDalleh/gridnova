@@ -135,7 +135,7 @@ Each scene lists: **Purpose · Content · Visual · Motion · Interaction · Exi
 |---|---|---|
 | **A** 01 → 02 | composed | title words exit in stagger; Core flies to the peak point; curve begins drawing as Core lands |
 | **B** 03 → 04 | composed | camera dive into the substation; map dissolves; Core becomes controller node; links start drawing |
-| **C** 07 → 08 | composed (NOT built in slice 7: standard transition used) | KPI numbers detach and fly to their positions in the waterfall |
+| **C** 07 → 08 | composed (built lean after slice 7: the four KPI numbers fly into 08's number cards via `ui/fly.js`; the peak KPI changes text mid-flight from peak import to peak reduction) | KPI numbers detach and fly to their positions in the waterfall |
 | all others | standard | outgoing scene: fade + slight scale down (0.98) + blur; incoming: fade + rise 24px |
 | Backward navigation | | every transition has a reverse (timelines `reverse()` or a mirrored standard transition); never a stuck state |
 

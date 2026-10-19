@@ -8,7 +8,7 @@ Source of truth: the assignment PDF (keep it outside the repo / out of the deliv
 | R02 | 8–10 distinct, art-directed scenes forming a complete executive story (§2) | scenes 01–09 | storyboard walkthrough | ☐ |
 | R03 | Scene purposes 01–09 covered (opening, problem, opportunity, system, use case, capability, simulator, business case, roadmap & decision with explicit ask) (§2) | storyboard | walkthrough | ☐ |
 | R04 | Not a static card deck / converted PPT / video (§2 creative direction) | all | review | ☐ |
-| R05 | Every scene enters/exits smoothly; ≥3 composed transitions beyond a full-screen fade (§3.1) | transitions A, B, C | e2e + rehearsal | ◐ slice 4-7: composed A and B (+ reverses) done; C (07→08) cut for the deadline, standard transition used |
+| R05 | Every scene enters/exits smoothly; ≥3 composed transitions beyond a full-screen fade (§3.1) | transitions A, B, C | e2e + rehearsal | ✅ composed A (01→02), B (03→04), C (07→08, KPI numbers fly into the 08 cards), all reversible and reduced-motion safe |
 | R06 | Kinetic typography reinforcing the narrative (§3.1) | 01, 02, 09 | rehearsal | ✅ slice 4-7: 01 title, 02 counters, 09 ask types in |
 | R07 | ≥1 coherent animated system visualization (§3.1) | 04, 05 | rehearsal | ✅ slice 5-6: 04 diagram (draw-in, flowing dashes, control pulses); 05 event chart + mini diagram |
 | R08 | Cross-scene continuity: element persists/transforms between scenes (§3.1) | GridNova Core (ghost load curve 02→07 dropped, decision in slice 5) | rehearsal | ◐ slice 4-5: Core hero → peak marker → substation → controller node; 07 glow, 09 large beside the ask |

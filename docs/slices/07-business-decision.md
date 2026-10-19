@@ -1,6 +1,6 @@
 # Slice 7: scenes 08 + 09 (R03, R05, R06, R15, R31)
 
-**Scope decision (deadline):** composed transition C (07 -> 08, KPI numbers flying into the waterfall) was NOT built; 07 -> 08 uses the standard transition. R05 still has A and B as composed transitions. Open item for slice 8 if time allows: a generic `flyNumbers(sources, targets)` helper plus `'6>7'` / `'7>6'` entries in `transitions.js`; scene 08 already has the target numbers (the four cards).
+**Update:** transition C was added afterwards in lean form: `ui/fly.js` clones the four KPI numbers of 07 and flies them to 08's four number cards (and back for 08 -> 07); timings in `TRANSITION_C` (`core/timing.js`); scenes expose `flyPoints()`; tests in `tests/e2e/transition-c.spec.js`. Original scope note: R05 still has A and B as composed transitions. Open item for slice 8 if time allows: a generic `flyNumbers(sources, targets)` helper plus `'6>7'` / `'7>6'` entries in `transitions.js`; scene 08 already has the target numbers (the four cards).
 
 ## What changed
 - `src/scenes/08-business-case/`: `figures.js` (cards, waterfall bars, cash flow, formulas: pure), `template.js`, `scene.css`, `index.js`.

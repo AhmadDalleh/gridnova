@@ -40,3 +40,13 @@ export const TRANSITION_B_BACK = {
   core: 0.8,
   enterDelay: 0.2,   // scene 03's pull-out takes 0.9 s, so it ends with the Core's landing at 1.1 s
 };
+
+// C: 07 -> 08 (and back). The four KPI numbers detach from scene 07 and fly into scene 08's cards while 07 fades out
+// and 08 fades in behind them; the Core travels at the same time. Ends when the numbers land.
+export const TRANSITION_C = {
+  coreDelay: 0,
+  core: 0.9,
+  enterDelay: 0.35,  // 08's frame (0.45 s) is in place before the numbers land
+  flyDelay: 0.1,     // the numbers leave a moment after the scene starts to fade
+  fly: 0.9,          // each number's flight; the four are staggered 0.08 s, so the last lands at 1.3 s = the whole transition
+};

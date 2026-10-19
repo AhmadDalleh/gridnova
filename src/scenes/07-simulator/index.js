@@ -150,12 +150,18 @@ export default {
   },
 
   // Quick reveal of the frame only (fits the standard transition budget). The data animates in activate().
-  enter(dir) {
+  enter(dir, { composed = false } = {}) {
     const { paused, reducedMotion } = ctx.store.get();
     view.hoverHour = null;
     setDrawer(false);
     lastSim = ctx.store.get().sim;
     render({ animate: false });                              // start from the final, correct state
+    if (composed && !reducedMotion) {                        // transition C reversed: the numbers fly back in, so show the finished scene
+      entrancePrepared = false;
+      setNow(kpis.cards, { autoAlpha: 1, y: 0 });
+      setNow(el, { x: 0 });
+      return gsap.timeline().fromTo(el, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.45, ease: 'power1.out' });
+    }
     entrancePrepared = !paused && !reducedMotion;
     if (entrancePrepared) {                                  // then rewind the visuals so activate() can play them up
       chart.set(emptyShape());
@@ -167,8 +173,14 @@ export default {
     return revealScene(el, reducedMotion, dir);
   },
 
-  exit(dir) {
+  exit(dir, { composed = false } = {}) {
+    if (composed) return gsap.to(el, { autoAlpha: 0, duration: 0.45, delay: 0.45, ease: 'power1.in' });   // the KPI numbers fly out first
     return hideScene(el, ctx.store.get().reducedMotion, dir);
+  },
+
+  /** The numbers that fly to scene 08 (and back), in the same order as scene 08's cards: capex, net value, payback, peak. */
+  flyPoints() {
+    return ['capex', 'value', 'payback', 'peak'].map((k) => el.querySelector(`[data-kpi="${k}"] .kpi-value`));
   },
 
   activate() {
