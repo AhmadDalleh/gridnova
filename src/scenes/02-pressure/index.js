@@ -1,4 +1,5 @@
 import { gsap } from 'gsap';
+import { setNow } from '../../ui/set-now.js';
 import './scene.css';
 import { simulate } from '../../model/simulate.js';
 import { PEAK_WINDOW } from '../../model/constants.js';
@@ -39,21 +40,21 @@ const canAnimate = () => {
 // ---- states -----------------------------------------------------------------------------------------------
 function showFinal() {
   chart.setProgress(1);
-  gsap.set(chart.band, { autoAlpha: 1, opacity: 1 });
+  setNow(chart.band, { autoAlpha: 1, opacity: 1 });
   stats.forEach((s) => {
-    gsap.set(s.card, { autoAlpha: 1, y: 0 });
+    setNow(s.card, { autoAlpha: 1, y: 0 });
     countTo(s.valueEl, s.value, { format: s.format, immediate: true });
   });
-  gsap.set(titleWords, { yPercent: 0 });
+  setNow(titleWords, { yPercent: 0 });
   view.interactive = true;
   ctx.core.show();
 }
 
 function hideAll() {
   chart.setProgress(0);
-  gsap.set(chart.band, { autoAlpha: 0 });
+  setNow(chart.band, { autoAlpha: 0 });
   stats.forEach((s) => {
-    gsap.set(s.card, { autoAlpha: 0, y: 24 });
+    setNow(s.card, { autoAlpha: 0, y: 24 });
     countTo(s.valueEl, 0, { format: s.format, immediate: true });
   });
   view.interactive = false;

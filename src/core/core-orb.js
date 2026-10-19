@@ -33,7 +33,7 @@ export function createCore(stageEl, motion) {
     /** Jump (no animation) to a scene's anchor: used for the first scene and hash resume. */
     snapTo(scene) {
       const box = anchorBox(scene.el, scene.coreAnchor);
-      if (box) gsap.set(orb, { x: box.x, y: box.y, width: box.size, height: box.size });
+      if (box) setNow(orb, { x: box.x, y: box.y, width: box.size, height: box.size });
     },
     /** Tween to a scene's anchor. Returns a tween so transitions can place it on their timeline. */
     moveTo(scene, vars = {}) {

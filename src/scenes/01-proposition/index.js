@@ -1,4 +1,5 @@
 import { gsap } from 'gsap';
+import { setNow } from '../../ui/set-now.js';
 import './scene.css';
 import { revealScene, hideScene } from '../../ui/reveal.js';
 import { splitWords } from '../../ui/split.js';
@@ -46,22 +47,22 @@ function restParallax() {
 /** Everything at its finished look. */
 function showFinal() {
   const { fades, words, balance, rings, labels } = nodes;
-  gsap.set(fades, { autoAlpha: 1, y: 0 });
-  gsap.set(words, { xPercent: 0, yPercent: 0 });
-  gsap.set(balance, { xPercent: 0, yPercent: 0, clipPath: 'none', color: CYAN });
-  gsap.set(rings, { scale: 1, autoAlpha: 1 });
-  gsap.set(labels, { autoAlpha: 1 });
+  setNow(fades, { autoAlpha: 1, y: 0 });
+  setNow(words, { xPercent: 0, yPercent: 0 });
+  setNow(balance, { xPercent: 0, yPercent: 0, clipPath: 'none', color: CYAN });
+  setNow(rings, { scale: 1, autoAlpha: 1 });
+  setNow(labels, { autoAlpha: 1 });
   ctx.core.show();
 }
 
 /** Everything hidden, ready for the opening choreography. */
 function hideAll() {
   const { fades, words, balance, rings, labels } = nodes;
-  gsap.set(fades, { autoAlpha: 0, y: 16 });
-  gsap.set(words, { xPercent: 0, yPercent: 110 });
-  gsap.set(balance, { xPercent: 0, yPercent: 0, clipPath: OUTLINE_HIDDEN, color: CYAN_CLEAR });
-  gsap.set(rings, { scale: 0.6, autoAlpha: 0 });
-  gsap.set(labels, { autoAlpha: 0 });
+  setNow(fades, { autoAlpha: 0, y: 16 });
+  setNow(words, { xPercent: 0, yPercent: 110 });
+  setNow(balance, { xPercent: 0, yPercent: 0, clipPath: OUTLINE_HIDDEN, color: CYAN_CLEAR });
+  setNow(rings, { scale: 0.6, autoAlpha: 0 });
+  setNow(labels, { autoAlpha: 0 });
   ctx.core.hide();
 }
 

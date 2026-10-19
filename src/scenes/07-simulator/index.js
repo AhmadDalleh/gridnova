@@ -1,4 +1,5 @@
 import { gsap } from 'gsap';
+import { setNow } from '../../ui/set-now.js';
 import './scene.css';
 import { PRESETS } from '../../model/constants.js';
 import { matchPreset } from '../../model/presets.js';
@@ -159,9 +160,9 @@ export default {
     if (entrancePrepared) {                                  // then rewind the visuals so activate() can play them up
       chart.set(emptyShape());
       kpis.zero();
-      gsap.set(kpis.cards, { autoAlpha: 0, y: 24 });
+      setNow(kpis.cards, { autoAlpha: 0, y: 24 });
     } else {
-      gsap.set(kpis.cards, { autoAlpha: 1, y: 0 });
+      setNow(kpis.cards, { autoAlpha: 1, y: 0 });
     }
     return revealScene(el, reducedMotion, dir);
   },
@@ -186,7 +187,7 @@ export default {
       if (canAnimate()) playEntrance();
       else {                                                 // paused / reduced since enter(): show the final state at once
         render({ animate: false });
-        gsap.set(kpis.cards, { autoAlpha: 1, y: 0 });
+        setNow(kpis.cards, { autoAlpha: 1, y: 0 });
       }
     }
   },

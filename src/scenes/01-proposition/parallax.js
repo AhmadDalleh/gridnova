@@ -1,4 +1,5 @@
 import { gsap } from 'gsap';
+import { setNow } from '../../ui/set-now.js';
 
 // Three-layer mouse parallax: grid (depth 0.3), dots (0.6), rings (0.8), plus the Core (1.0).
 // Deeper = closer = moves more, opposite to the pointer. quickTo reuses one tween per property, so
@@ -14,8 +15,8 @@ const CORE_PERCENT = 12;  // the Core moves in xPercent/yPercent of its own size
 export function resetParallax(layers, coreEl) {
   gsap.killTweensOf(layers);
   gsap.killTweensOf(coreEl, 'xPercent,yPercent');
-  gsap.set(layers, { x: 0, y: 0 });
-  gsap.set(coreEl, { xPercent: 0, yPercent: 0 });
+  setNow(layers, { x: 0, y: 0 });
+  setNow(coreEl, { xPercent: 0, yPercent: 0 });
 }
 
 /**
